@@ -5,8 +5,8 @@ init:
                             ; output
     out     DDRC, r16
     
-    ldi     r16, 0xFF
-    out     PORTC, r16 ; pull all PORTC internally to logical 1
+    ldi     r16, 0
+    out     PORTC, r16 ; pull all PORTC internally to logical 0
 main:
     in      r16, PINC ; read the value from PORTC
     andi    r16, 0x07 ; 0x07 = 0b00000111 this will keep only MSB: PC0, PC1, PC2
