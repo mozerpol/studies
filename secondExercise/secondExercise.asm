@@ -50,9 +50,7 @@ delay:
     ret  
     
 decreaseNumb:
-    call    delay
-    ldi     r16, SEG_SIX
-    out     PORTD, r16
+
     call    delay
     ldi     r16, SEG_FIVE
     out     PORTD, r16
@@ -68,7 +66,12 @@ decreaseNumb:
     call    delay
     ldi     r16, SEG_ONE
     out     PORTD, r16
-    call    delay
+    call    delay 
+    andi    r21, 0x00
+    in      r16, PINC
+    andi    r16, 0x07
+    cpi     r16, 0x06 ; 0b11111110 PC0
+    breq    decreaseAgainFlag   
     rjmp    decreaseNumb
          
 increaseNumb:
@@ -87,11 +90,7 @@ increaseNumb:
     call    delay
     ldi     r16, SEG_FIVE
     out     PORTD, r16
-    call    delay
-    
-    ldi     r16, SEG_SIX
-    out     PORTD, r16 
-    call    delay
+    call    delay  
     
     andi    r20, 0x00
     in      r16, PINC
@@ -102,10 +101,15 @@ increaseNumb:
 
 increaseAgainFlag:
     inc     R20
-    cpi     r20, 0x01
+    cpi     R20, 0x01
     breq    decreaseNumb
 ret
-    
+
+decreaseAgainFlag:
+    inc     R21
+    cpi     R21, 0x01
+    breq    increaseNumb
+ret  
     
     
     
