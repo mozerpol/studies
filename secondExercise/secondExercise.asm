@@ -23,9 +23,13 @@ main:
     andi    r16, 0x07 ; 0x07 = 0b00000111 this will keep only MSB: PC0, PC1, PC2
     cpi     r16, 0x05 ; 0x05 = 0b11111101 compare R16 with 0x05. If PC1 = GND,
                       ; then jump to SW0 label
-    breq    startCount
-  
-SW0:
+    breq    increaseNumb
+    
+  ;  in      r16, PINC
+  ;  andi    r16, 0x07
+  ;  cpi     r16, 0x06 ; 0b11111110 PC0
+  ;  breq    decreaseNumb
+    
     rjmp    main
                     
 startCount:    
@@ -69,6 +73,7 @@ decreaseNumb:
     call    delay
     ldi     r16, SEG_ONE
     out     PORTD, r16
+    call    delay
 ret      
 increaseNumb:
     call    delay
@@ -87,10 +92,30 @@ increaseNumb:
     ldi     r16, SEG_FIVE
     out     PORTD, r16
     call    delay
+    
     ldi     r16, SEG_SIX
-    out     PORTD, r16
+    out     PORTD, r16 
+    call    delay
+    
+    andi    r20, 0x00
+    in      r16, PINC
+    andi    r16, 0x07
+    cpi     r16, 0x06 ; 0b11111110 PC0
+    breq    increaseAgainFlag     
 ret  
 
+increaseAgainFlag:
+    inc     R20
+    cpi     r20, 0x01
+    breq    increaseNumb
+ret
+    
+    
+    
+    
+    
+    
+    
     
     
     
