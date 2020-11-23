@@ -1,4 +1,4 @@
-.include "./m328Pdef.inc"
+.include "./m328Pdef.inc" ; directive for pin and register definitions
 
 init:
     ldi     r16, 0b11111110 ; set PC0 as input and rest of pins as output
@@ -21,17 +21,18 @@ SW0:
     rjmp    main
 
 delay:    
-    petla_3:
-        ldi     R16, 20   
-    petla_2:
-        ldi     R18, 12
-    petla_1:
-        dec     R18
-        brne    petla_1
-        dec     R17
-        brne    petla_2       
-        dec     R19
-        brne    petla_3    
+    ldi     r16, 249
+    loop_2:
+        ldi     R17, 200   
+    loop_1:     
+        dec     R17 ; dec decrements 8bit register. DEC instruction sets Z flag
+                    ; in the status register 
+        brne    loop_1 ; branch if not equal. Tests if the result of the 
+                       ; previous operation was zero. If it was not, brne jump 
+                       ; to the label given as an operand. If it was zero 
+                       ; brne will continue to the next instruction.
+        dec     R16
+        brne    loop_2        
     ret  
     
     
