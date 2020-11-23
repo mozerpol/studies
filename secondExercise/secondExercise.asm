@@ -14,8 +14,8 @@ init:
     ldi     r16, 0xFF
     out     PORTD, r16 ; pull all PORTC internally to logical 1, so turn off LED
 main:
-    ldi     r17, 0b10000000
-    out     PORTD, r17
+    call    increaseNumb
+    call    decreaseNumb
     rjmp    main
     
 SW0:
@@ -39,7 +39,46 @@ delay:
         brne    loop_2
     ret  
     
-    
+increaseNumb:
+    call    delay
+    ldi     r16, SEG_ONE
+    out     PORTD, r16
+    call    delay
+    ldi     r16, SEG_TWO
+    out     PORTD, r16
+    call    delay
+    ldi     r16, SEG_THREE
+    out     PORTD, r16
+    call    delay
+    ldi     r16, SEG_FOUR
+    out     PORTD, r16
+    call    delay
+    ldi     r16, SEG_FIVE
+    out     PORTD, r16
+    call    delay
+    ldi     r16, SEG_SIX
+    out     PORTD, r16
+ret  
+decreaseNumb:
+    call    delay
+    ldi     r16, SEG_SIX
+    out     PORTD, r16
+    call    delay
+    ldi     r16, SEG_FIVE
+    out     PORTD, r16
+    call    delay
+    ldi     r16, SEG_FOUR
+    out     PORTD, r16
+    call    delay
+    ldi     r16, SEG_THREE
+    out     PORTD, r16
+    call    delay
+    ldi     r16, SEG_TWO
+    out     PORTD, r16
+    call    delay
+    ldi     r16, SEG_ONE
+    out     PORTD, r16
+ret  
     
     
     
