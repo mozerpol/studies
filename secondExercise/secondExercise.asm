@@ -24,18 +24,13 @@ main:
     cpi     r16, 0x05 ; 0x05 = 0b11111101 compare R16 with 0x05. If PC1 = GND,
                       ; then jump to SW0 label
     breq    increaseNumb
-    
-  ;  in      r16, PINC
-  ;  andi    r16, 0x07
-  ;  cpi     r16, 0x06 ; 0b11111110 PC0
-  ;  breq    decreaseNumb
-    
     rjmp    main
-                    
+                  
 startCount:    
     call    increaseNumb
     call    decreaseNumb
     rjmp    main
+    
 delay:    
     ldi     r16, 50
     ldi     r18, 18
@@ -74,7 +69,8 @@ decreaseNumb:
     ldi     r16, SEG_ONE
     out     PORTD, r16
     call    delay
-ret      
+    rjmp    decreaseNumb
+         
 increaseNumb:
     call    delay
     ldi     r16, SEG_ONE
@@ -102,12 +98,12 @@ increaseNumb:
     andi    r16, 0x07
     cpi     r16, 0x06 ; 0b11111110 PC0
     breq    increaseAgainFlag     
-ret  
+    rjmp    increaseNumb 
 
 increaseAgainFlag:
     inc     R20
     cpi     r20, 0x01
-    breq    increaseNumb
+    breq    decreaseNumb
 ret
     
     
