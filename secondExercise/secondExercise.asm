@@ -21,10 +21,13 @@ SW0:
     rjmp    main
 
 delay:    
-    ldi     r16, 249
+    ldi     r16, 16
+    ldi     r18, 255
     loop_2:
-        ldi     R17, 200   
-    loop_1:     
+        ldi     R17, 100
+    loop_1:   
+        dec     R18
+        brne    loop_1
         dec     R17 ; dec decrements 8bit register. DEC instruction sets Z flag
                     ; in the status register 
         brne    loop_1 ; branch if not equal. Tests if the result of the 
@@ -32,7 +35,7 @@ delay:
                        ; to the label given as an operand. If it was zero 
                        ; brne will continue to the next instruction.
         dec     R16
-        brne    loop_2        
+        brne    loop_2
     ret  
     
     
