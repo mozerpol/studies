@@ -5,7 +5,6 @@
 .EQU    SEG_THREE = 0x31 ; 0x31 = 0b00110001
 .EQU    SEG_FOUR = 0x63 ; 0x63 = 0b01100011
 .EQU    SEG_FIVE = 0x81 ; 0x81 = 0b10000001
-.EQU    SEG_SIX = 0x80 ; 0x80 = 0b10000000
 
 init:
     ldi     r16, 0xFF ; set PORTD as output where is 7seg display
