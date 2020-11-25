@@ -7,15 +7,12 @@
 
 init:
     ldi     r16, 0b11111000 ; set PC0, PC1, PC2 as input and rest of pins as
-    out     DDRC, r16       ; output
-    
+    out     DDRC, r16       ; output 
     ldi     r16, 0xFF ; pull all PORTC internally to logical 1, onnect to
     out     PORTC, r16 ; internall resistor
     
-    ldi     r16, 0xFF ; set PORTD as output where is 7seg display
-    out     DDRD, r16
-    ldi     r16, 0xFF ; pull all PORTD internally to logical 1, so turn off LED
-    out     PORTD, r16 
+    out     DDRD, r16 ; set PORTD as output where is 7seg display
+    out     PORTD, r16 ; pull all PORTD internally to logical 1, so turn off LED
 
 main:
     in      r16, PINC ; read the value from PORTC
