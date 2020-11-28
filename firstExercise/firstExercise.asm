@@ -57,17 +57,17 @@ SWRESET:
     ldi     r16, 50
     ldi     r18, 18
     loop_2:
-        ldi     R17, 17
+        ldi     r17, 17
     loop_1:   
-        dec     R18
+        dec     r18
         brne    loop_1
-        dec     R17 ; decrement 8bit register. DEC instruction sets Z flag
+        dec     r17 ; decrement 8bit register. DEC instruction sets Z flag
                     ; in the status register 
         brne    loop_1 ; branch if not equal. Tests if the result of the 
                        ; previous operation was zero. If it was not, brne jump 
                        ; to the label given as an operand. If it was zero 
                        ; brne will continue to the next instruction.
-        dec     R16
+        dec     r16
         brne    loop_2
     rjmp    main     
     
