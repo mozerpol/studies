@@ -28,4 +28,18 @@ cpi     r16, 0x05
 breq    SW1
 ```
 `in` - load data from I/O Space (like Ports, Timers, Configuration Registers, etc.) to register. In this case we're loading info from PINC to r16 register. It makes sense, I think... All 8-bit AVR family has only from 0 to 7 bit PORT, for example we have in mega328p PORTC, which has PC0, PC1, ..., PC7, in total eight pins. There is no 8-bit microcontroller, which has more than eight registers on a given port. So we can load eight bit value from PORTC to our eight bit r16 register. Each cell in the register can take two states: 0 or 1. 
-`andi` - 
+`andi` - it's logical AND with immediate loading of the result to the register. The 0x07 value means binary 0b00000111. So if we use logical AND on PORTC with 0x07 value we will leave only the three last values. 
+`cpi` - compare between register and a constant. In this case we're comparing 0x05 (it's 0b00000101) with r16 register, where we read the value a moment ago on PORTC. If register and constant are the same, set flag in Z register. 
+`breq` - branch if equal.  Tests the Zero Flag (Z register), if is set jump to label, in this case jump to SW1 register. 
+
+
+
+
+
+
+
+
+
+
+
+
