@@ -51,8 +51,19 @@ arrLp:
     cpi     r16, 0x06 ; 0b00000110
     breq    previousValue
     
+    cpi     XL, 0x02 ; 0b00001001
+    breq    onAccessBarrier
+    cpi     XL, 0x08 ; 0b00001001
+    breq    offAccessBarrier    
+    
     rjmp    arrLp
 
+onAccessBarrier:
+    ldi     r16, 0b11101111
+    out     PORTC, r16 ; pull all PORTC internally to logical 1
+offAccessBarrier:
+   ; ldi     r16, 0b11111111
+    out     PORTC, r16 ; pull all PORTC internally to logical 1
 nextValue:
     lpm	    tmp, Z+			; load value from pmem array
 	out     PORTD, tmp
@@ -78,7 +89,7 @@ numbers7seg:
     
  ; -------- delay function - about 1 sek -------- 
 delay:    
-    ldi     r16, 50
+    ldi     r16, 20
     ldi     r18, 18
     loop_2:
         ldi     R17, 17
