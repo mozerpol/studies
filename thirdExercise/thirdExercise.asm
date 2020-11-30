@@ -45,6 +45,12 @@ arrLp:
     andi    r16, 0x07 ; 0x07 = 0b00000111 this will keep only MSB: PC0, PC1, PC2
     cpi     r16, 0x05 ; 0x05 = 0b11111101 compare R16 with 0x05. If PC1 = GND,          
     breq    nextValue ; then jump to increaseNumb label
+    
+    in      r16, PINC
+    andi    r16, 0x07
+    cpi     r16, 0x06 ; 0b00000110
+    breq    previousValue
+    
     rjmp    arrLp
 
 nextValue:
@@ -54,6 +60,13 @@ nextValue:
 	st	    X+, tmp			; store value to SRAM array
     rjmp    arrLp
 
+previousValue:
+    subi    ZL, 1
+    lpm	    tmp, Z			; load value from pmem array
+	out     PORTD, tmp
+	call    delay
+	st	    X+, tmp			; store value to SRAM array
+    rjmp    arrLp
 
 
  
