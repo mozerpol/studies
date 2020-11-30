@@ -36,18 +36,19 @@ init:
 	out     PORTD, r20
 	
 arrLp:	    
-    call    delay
-    lpm	    tmp, Z+			; load value from pmem array
-	out     PORTD, tmp
+    
+    call    nextValue
 	st	    X+, tmp			; store value to SRAM array
 	dec	    loopCt			; decrement loop count
 	brne	arrLp			; repeat loop for all bytes in array
 
 
 
-main:
-
-    rjmp    main
+nextValue:
+    lpm	    tmp, Z+			; load value from pmem array
+	out     PORTD, tmp
+	call    delay
+ret
 
 
 
