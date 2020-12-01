@@ -10,7 +10,8 @@
 .EQU    SEG_SEVEN = 0x3B ; 0x3B = 0b00111011
 .EQU    SEG_EIGHT = 0x00 ; 0x00 = 0b00000000
 .EQU    SEG_NINE = 0x01 ; 0x01 = 0b00000001
-
+.EQU    FREE = 0xDD ; 0xDD = 0b11011101
+.EQU    FULL = 0xEF ; 0xEF = 0b11101111
 .EQU	numB = 10 ; number of bytes in array
 .DEF	tmp	= r21 ; define temp register
 .DEF	loopCt	= r22 ; define loop count register
@@ -35,6 +36,10 @@ init:
     ldi     r20, SEG_ZERO
 	out     PORTD, r20
 	
+	ldi     r20, 0xff ; set PORTB as output where is 7seg display
+    out     DDRB, r20
+	out     PORTB, r20
+	
 	ldi     r16, 0b11111000 ; set PC0, PC1, PC2 as input and rest of pins as
     out     DDRC, r16       ; output
     ldi     r16, 0xFF
@@ -51,21 +56,22 @@ arrLp:
     cpi     r16, 0x06 ; 0b00000110
     breq    previousValue
     
-    cpi     +XL, 0x02 ; 0b00001001
+    cpi     XL, 0x00 ; 0b00001001
     breq    onAccessBarrier
-    cpi     XL, 0x05 ; 0b00001001
+    cpi     XL, 0x0A ; 0b00001001
     breq    offAccessBarrier    
     
     rjmp    arrLp
 
 onAccessBarrier:
-    ldi     r16, 0b11011111
-    out     PORTC, r16 ; pull all PORTC internally to logical 1
+    ldi     r16, FREE
+    out     PORTB, r16 ; pull all PORTC internally to logical 1
     rjmp    arrLp 
 offAccessBarrier:
-    ldi     r16, 0b11111111
-    out     PORTC, r16 ; pull all PORTC internally to logical 1
+    ldi     r16, FULL
+    out     PORTB, r16 ; pull all PORTC internally to logical 1
     rjmp    arrLp 
+    
 nextValue:
     lpm	    tmp, Z+			; load value from pmem array
 	out     PORTD, tmp
