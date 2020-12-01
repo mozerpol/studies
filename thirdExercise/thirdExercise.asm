@@ -51,19 +51,21 @@ arrLp:
     cpi     r16, 0x06 ; 0b00000110
     breq    previousValue
     
-    cpi     XL, 0x02 ; 0b00001001
+    cpi     +XL, 0x02 ; 0b00001001
     breq    onAccessBarrier
-    cpi     XL, 0x08 ; 0b00001001
+    cpi     XL, 0x05 ; 0b00001001
     breq    offAccessBarrier    
     
     rjmp    arrLp
 
 onAccessBarrier:
-    ldi     r16, 0b11101111
+    ldi     r16, 0b11011111
     out     PORTC, r16 ; pull all PORTC internally to logical 1
+    rjmp    arrLp 
 offAccessBarrier:
-   ; ldi     r16, 0b11111111
+    ldi     r16, 0b11111111
     out     PORTC, r16 ; pull all PORTC internally to logical 1
+    rjmp    arrLp 
 nextValue:
     lpm	    tmp, Z+			; load value from pmem array
 	out     PORTD, tmp
