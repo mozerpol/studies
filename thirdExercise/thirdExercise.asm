@@ -71,8 +71,27 @@ main:
     cpi     XL, 0x0A ; 0b00001001
     breq    offAccessBarrier    
     
+    cpi     XL, 0x00 ; 0b00000000
+    breq    V
+    cpi     XL, 0x07 ; 0b00001001
+    breq    A
+    cpi     XL, 0x0A ; 0b00001001
+    breq    E     
     rjmp    main
-
+    
+V:
+    ldi     r16, 0b11011111
+    out     PORTC, r16 ; pull all PORTC internally to logical 1
+    rjmp    main 
+A:
+    ldi     r16, 0b11101111
+    out     PORTC, r16 ; pull all PORTC internally to logical 1
+    rjmp    main 
+E:
+    ldi     r16, 0b11110111
+    out     PORTC, r16 ; pull all PORTC internally to logical 1
+    rjmp    main 
+    
 onAccessBarrier:
     ldi     r16, 0b11110111
     out     PORTC, r16 ; pull all PORTC internally to logical 1
