@@ -73,10 +73,10 @@ main:
     cpi     XL, 0x0A ; 0b00001010
     breq    offAccessBarrier ; no free parking spaces
     
+    cpi     XL, 0x09 ;  if XL pointer is 9
+    brlt    VorA ; brlt - branch if less than, not equal or less!
     cpi     XL, 0x09 ; 
-    brlt    VorA ; 
-    cpi     XL, 0x09 ; 
-    breq    E     
+    breq    E 
     rjmp    main    
 VorA:
     cpi     XL, 0x06
@@ -85,38 +85,38 @@ VorA:
     rjmp    main 
 V:
     ldi     temp, 0b11011111 ; pc5
-    out     PORTC, temp ; pull all PORTC internally to logical 1
+    out     PORTC, temp
     rjmp    main 
 A:
     ldi     temp, 0b11101111 ; pc4
-    out     PORTC, temp ; pull all PORTC internally to logical 1
+    out     PORTC, temp
     rjmp    main 
 E:
     ldi     temp, 0b11110111 ; pc3
-    out     PORTC, temp ; pull all PORTC internally to logical 1
+    out     PORTC, temp
     rjmp    main
 onAccessBarrier:
     ldi     temp, 0b11110111
-    out     PORTC, temp ; pull all PORTC internally to logical 1
+    out     PORTC, temp
     rjmp    main 
 offAccessBarrier:
     ldi     temp, 0b11101111
-    out     PORTC, temp ; pull all PORTC internally to logical 1
-    rjmp    main   
+    out     PORTC, temp
+    rjmp    main
 nextValue:
-    lpm	    tmp, Z+			; load value from pmem array
-	out     PORTD, tmp
+    lpm	    tmp, Z+	; load program memory. Load constant from Z to tmp register
+	out     PORTD, tmp ; set correct number on the 7seg display
 	out     PORTB, tmp
 	call    delay
-	st	    X+, tmp			; store value to SRAM array
+	st	    X+, tmp	; store value to SRAM array
     rjmp    main
 previousValue:
-    subi    ZL, 1
-    lpm	    tmp, Z			; load value from pmem array
-	out     PORTD, tmp
+    subi    ZL, 1 ; substract, decrement lower part of Z register
+    lpm	    tmp, Z ; load value from pmem array
+	out     PORTD, tmp ; set correct number on the 7seg display
 	out     PORTB, tmp
 	call    delay
-	st	    X+, tmp			; store value to SRAM array
+	st	    X+, tmp	; store value to SRAM array
     rjmp    main
 ; -------- delay function - about 1 sek -------- 
 delay:    
