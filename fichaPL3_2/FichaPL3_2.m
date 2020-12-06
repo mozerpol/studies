@@ -16,8 +16,9 @@ A = [1 1 3 2; -1 0 1 -1; 2 1 0 0];  % matrix with inequality constraints
 Aq = [1 2 1 2];  % matrix with equality constraints
 b = [4 ;1 ; 2];  % vector with results of our inequality constraints
 bq = 2;   % vector with results of our equality constraints
-lb = [0 0 0 0];  % lower boundry
-ub = [inf inf inf inf];  % upper boundry
+lb = [0 0 0 0];  % lower boundry, because x ≥ 0
+ub = [inf inf inf inf];  % upper boundry, there is no upper limit given in 
+% the content of the task, so we assume that it is infinite
 
 [x,fval] = linprog(f,A,b,Aq,bq,lb,ub);
 
