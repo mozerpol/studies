@@ -2,4 +2,5 @@
 *.hex
 *.obj
 Makefile
-nbproject/*
+**/nbproject
+**/secondEvaluation
