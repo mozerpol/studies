@@ -3,4 +3,4 @@
 *.obj
 Makefile
 **/nbproject
-**/secondEvaluation
+*.flag
