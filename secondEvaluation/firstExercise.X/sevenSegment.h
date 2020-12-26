@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <util/delay.h>
 #include <avr/io.h>
 
 // Macros for displaying numbers on the 7 segment display

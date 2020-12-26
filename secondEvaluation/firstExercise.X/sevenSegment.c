@@ -80,5 +80,3 @@ uint8_t displayNumber(uint8_t whichDisp, uint8_t whichNumber)
     selectNumber(whichNumber);
     return 0;
 }
-
-

@@ -1,7 +1,8 @@
 #include "sevenSegment.h"
+#include "pushButton.h"
 
 
-int main(void)
+uint8_t main(void)
 {  
     for(int j = 1; j <= 4; j++)
     {
