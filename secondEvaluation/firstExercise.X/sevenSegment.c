@@ -2,8 +2,25 @@
 
 uint8_t selectDisplay(uint8_t whichDisp)
 {
-    DDRC = (1<<whichDisp); // PC4 as output 
-    PORTC &= ~(1<<whichDisp); // Pull internally PC4 to GND
+    switch(whichDisp)
+    {
+        case 1:
+            DDRC = (1<<FIRST_7SEG);// PC4 as output 
+            PORTC &= ~(1<<whichDisp); // Pull internally PC4 to GND
+            break;
+        case 2:
+            DDRC = (1<<SECOND_7SEG); // PC4 as output 
+            PORTC &= ~(1<<whichDisp); // Pull internally PC4 to GND
+            break;
+        case 3:
+            DDRC = (1<<THIRD_7SEG); // PC4 as output 
+            PORTC &= ~(1<<whichDisp); // Pull internally PC4 to GND
+            break;
+        case 4:
+            DDRC = (1<<FOURTH_7SEG); // PC4 as output 
+            PORTC &= ~(1<<whichDisp); // Pull internally PC4 to GND
+            break;            
+    }
     return 0;
 }
 
@@ -14,40 +31,40 @@ uint8_t selectNumber(uint8_t whichNumber)
     switch(whichNumber)
     {
         case 0:
-            PORTD = 0b10111111;
+            PORTD = ZERO_7SEG;
             PORTB = (1<<PB0);
             break;
         case 1:
             PORTB = (0<<PB0);
-            PORTD = 0b00100100;
+            PORTD = ONE_7SEG;
             break;
         case 2:
-            PORTD = 0b11011100;
+            PORTD = TWO_7SEG;
             break;
         case 3:
-            PORTD = 0b11110100;
+            PORTD = THREE_7SEG;
             break;
         case 4:
-            PORTD = 0b01100100;
+            PORTD = FOUR_7SEG;
             PORTB = (1<<PB0);
             break;
         case 5:
-            PORTD = 0b11110000;
+            PORTD = FIVE_7SEG;
             PORTB = (1<<PB0);
             break;
         case 6:
-            PORTD = 0b11111000;
+            PORTD = SIX_7SEG;
             PORTB = (1<<PB0);
             break;
         case 7:
-            PORTD = 0b10100100;
+            PORTD = SEVEN_7SEG;
             break;
         case 8:
-            PORTD = 0b11111111;
+            PORTD = EIGHT_7SEG;
             PORTB = (1<<PB0);
             break;
         case 9:
-            PORTD = 0b11110100;
+            PORTD = NINE_7SEG;
             PORTB = (1<<PB0);
             break;
     }
