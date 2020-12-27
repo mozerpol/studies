@@ -5,20 +5,16 @@ uint8_t selectDisplay(uint8_t whichDisp)
     switch(whichDisp)
     {
         case 1:
-            DDRC = (1<<FIRST_7SEG);// PC4 as output 
-            PORTC &= ~(1<<whichDisp); // Pull internally PC0 to GND
+            DDRC = ((DDRC & MASK_PORTC) | FIRST_7SEG);
             break;
         case 2:
-            DDRC = (1<<SECOND_7SEG);
-            PORTC &= ~(1<<whichDisp);
+            DDRC = ((DDRC & MASK_PORTC) | SECOND_7SEG);
             break;
         case 3:
-            DDRC = (1<<THIRD_7SEG);
-            PORTC &= ~(1<<whichDisp);
+            DDRC = ((DDRC & MASK_PORTC) | THIRD_7SEG);
             break;
         case 4:
-            DDRC = (1<<FOURTH_7SEG);
-            PORTC &= ~(1<<whichDisp);
+            DDRC = ((DDRC & MASK_PORTC) | FOURTH_7SEG);
             break;            
     }
     return 0;
@@ -76,7 +72,31 @@ uint8_t selectNumber(uint8_t whichNumber)
 /// Function for more convenience
 uint8_t displayNumber(uint8_t whichDisp, uint8_t whichNumber)
 {
+    TIMER0_init();
     selectDisplay(whichDisp);
     selectNumber(whichNumber);
     return 0;
+}
+
+void TIMER0_init(void) //ustawienie dla 8-bit Timer/Counter0 with PWM
+{
+	TCCR2 |= (1<<WGM21);	//wlaczajac ten bit uzywamy trybu CTC (Clear Timer on Compare Match ? czyszczenie licznika przy osi?gni?ciu zadanej
+							//warto?ci) licznik samodzielnie wraca do warto?ci pocz?tkowej, gdy tylko osi?gnie warto?? zapisan? w rejestrze OCR0
+	TCCR2 |= (1<<CS22);		// 1 mhz / 64
+
+	TCNT2 = 0;				//to jest bit, w ktorym zapisywana jest dana licznika, czyli jak sobie procek liczy do 'ilustam' to tutaj jest zapisywana
+							//aktualna wartosc
+	OCR2 = 255;				//to jest to 'ilestam', do tej wartosci zlicza procek.
+    TIMSK |= (1<<OCIE2); // wlacz przerwanie kiedy doliczy do konca
+}
+
+volatile uint8_t idx = 0;
+
+ISR(TIMER2_COMP_vect)
+{
+    idx++;
+    if(idx == 3) 
+    {   
+        idx = 0;
+    } 
 }
