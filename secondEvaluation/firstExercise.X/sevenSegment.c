@@ -30,44 +30,44 @@ uint8_t selectNumber(uint8_t whichNumber)
     {
         case 0:
             PORTD = ZERO_7SEG; // mask is not necessary, because all PORTD is
-                               // for 7seg diplay purposes.
-            PORTB |= (1<<PB0);
+                               // for 7seg display purposes.
+            PORTB = ((PORTB & MASK_PORTB) | 0b00000001);
             break;
         case 1:
-            PORTB ^= (1<<PB0);
+            PORTB = (PORTB & MASK_PORTB);
             PORTD = ONE_7SEG;
             break;
         case 2:
-            PORTB ^= (1<<PB0);
+            PORTB = (PORTB & MASK_PORTB);
             PORTD = TWO_7SEG;
             break;
         case 3:
-            PORTB ^= (1<<PB0);
+            PORTB = (PORTB & MASK_PORTB);
             PORTD = THREE_7SEG;
             break;
         case 4:
+            PORTB = ((PORTB & MASK_PORTB) | 0b00000001);
             PORTD = FOUR_7SEG;
-            PORTB = (1<<PB0);
             break;
         case 5:
+            PORTB = ((PORTB & MASK_PORTB) | 0b00000001);
             PORTD = FIVE_7SEG;
-            PORTB = (1<<PB0);
             break;
         case 6:
+            PORTB = ((PORTB & MASK_PORTB) | 0b00000001);
             PORTD = SIX_7SEG;
-            PORTB = (1<<PB0);
             break;
         case 7:
-            PORTB ^= (1<<PB0);
+            PORTB = (PORTB & MASK_PORTB);
             PORTD = SEVEN_7SEG;
             break;
         case 8:
+            PORTB = ((PORTB & MASK_PORTB) | 0b00000001);
             PORTD = EIGHT_7SEG;
-            PORTB = (1<<PB0);
             break;
         case 9:
+            PORTB = ((PORTB & MASK_PORTB) | 0b00000001);
             PORTD = NINE_7SEG;
-            PORTB = (1<<PB0);
             break;
     }
     return 0;

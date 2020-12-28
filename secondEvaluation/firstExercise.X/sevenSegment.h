@@ -14,13 +14,14 @@
 #define SEVEN_7SEG  0b10100100
 #define EIGHT_7SEG  0b11111111
 #define NINE_7SEG   0b11110100
-#define MASK_PORTD  0b00000011
+
 // Macros for selecting 7 segment display at PORTC
 #define FIRST_7SEG  0b00000001
 #define SECOND_7SEG 0b00000010
 #define THIRD_7SEG  0b00000100
 #define FOURTH_7SEG 0b00001000
 #define MASK_PORTC  0b11110000
+#define MASK_PORTB  0b11111110
 
 
 
