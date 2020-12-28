@@ -3,7 +3,12 @@
 
 int main(void)
 {
+    DDRB |= (1<<PB1);
+    PORTB |= (1<<PB1);
+    
     displayNumber(1,0);
+    _delay_ms(500);
+    displayNumber(1,1);
     while(1);
     
     return 0;

@@ -31,18 +31,18 @@ uint8_t selectNumber(uint8_t whichNumber)
         case 0:
             PORTD = ZERO_7SEG; // mask is not necessary, because all PORTD is
                                // for 7seg diplay purposes.
-            PORTB = (1<<PB0);
+            PORTB |= (1<<PB0);
             break;
         case 1:
-            PORTB = (0<<PB0);
+            PORTB ^= (1<<PB0);
             PORTD = ONE_7SEG;
             break;
         case 2:
-            PORTB = (0<<PB0);
+            PORTB ^= (1<<PB0);
             PORTD = TWO_7SEG;
             break;
         case 3:
-            PORTB = (0<<PB0);
+            PORTB ^= (1<<PB0);
             PORTD = THREE_7SEG;
             break;
         case 4:
@@ -58,7 +58,7 @@ uint8_t selectNumber(uint8_t whichNumber)
             PORTB = (1<<PB0);
             break;
         case 7:
-            PORTB = (0<<PB0);
+            PORTB ^= (1<<PB0);
             PORTD = SEVEN_7SEG;
             break;
         case 8:
