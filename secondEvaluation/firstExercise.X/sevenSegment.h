@@ -20,7 +20,7 @@
 #define SECOND_7SEG 0b00000010
 #define THIRD_7SEG  0b00000100
 #define FOURTH_7SEG 0b00001000
-#define MASK_PORTC  0b11111000
+#define MASK_PORTC  0b11110000
 
 
 
@@ -28,4 +28,4 @@ uint8_t selectDisplay(uint8_t whichDisp); // return 0
 uint8_t selectNumber(uint8_t whichNumber); // return 0
 uint8_t displayNumber(uint8_t whichDisp, uint8_t whichNumber); // return 0
 
-void TIMER0_init(void); 
+void TIMER2_init(void); // CTC, 1MHz/64/78 = 200 Hz = 5 ms

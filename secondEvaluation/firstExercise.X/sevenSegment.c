@@ -28,8 +28,9 @@ uint8_t selectNumber(uint8_t whichNumber)
                         // must set PORTD as output.
     switch(whichNumber)
     {
-        case 0: // number 0 is some pins from PORTD and one pin from PORTB
-            PORTD = ZERO_7SEG;
+        case 0:
+            PORTD = ZERO_7SEG; // mask is not necessary, because all PORTD is
+                               // for 7seg diplay purposes.
             PORTB = (1<<PB0);
             break;
         case 1:
@@ -37,9 +38,11 @@ uint8_t selectNumber(uint8_t whichNumber)
             PORTD = ONE_7SEG;
             break;
         case 2:
+            PORTB = (0<<PB0);
             PORTD = TWO_7SEG;
             break;
         case 3:
+            PORTB = (0<<PB0);
             PORTD = THREE_7SEG;
             break;
         case 4:
@@ -55,6 +58,7 @@ uint8_t selectNumber(uint8_t whichNumber)
             PORTB = (1<<PB0);
             break;
         case 7:
+            PORTB = (0<<PB0);
             PORTD = SEVEN_7SEG;
             break;
         case 8:
@@ -72,31 +76,22 @@ uint8_t selectNumber(uint8_t whichNumber)
 /// Function for more convenience
 uint8_t displayNumber(uint8_t whichDisp, uint8_t whichNumber)
 {
-    TIMER0_init();
-    selectDisplay(whichDisp);
+    
     selectNumber(whichNumber);
+    selectDisplay(whichDisp);
+    
     return 0;
 }
 
-void TIMER0_init(void) //ustawienie dla 8-bit Timer/Counter0 with PWM
+// Interrupt for every 5 ms.
+void TIMER2_init(void)
 {
-	TCCR2 |= (1<<WGM21);	//wlaczajac ten bit uzywamy trybu CTC (Clear Timer on Compare Match ? czyszczenie licznika przy osi?gni?ciu zadanej
-							//warto?ci) licznik samodzielnie wraca do warto?ci pocz?tkowej, gdy tylko osi?gnie warto?? zapisan? w rejestrze OCR0
-	TCCR2 |= (1<<CS22);		// 1 mhz / 64
+	TCCR2 |= (1<<WGM21);	// CTC (Clear Timer on Compare Match)
+	TCCR2 |= (1<<CS22);		// Prescaler: 64 
 
-	TCNT2 = 0;				//to jest bit, w ktorym zapisywana jest dana licznika, czyli jak sobie procek liczy do 'ilustam' to tutaj jest zapisywana
-							//aktualna wartosc
-	OCR2 = 255;				//to jest to 'ilestam', do tej wartosci zlicza procek.
-    TIMSK |= (1<<OCIE2); // wlacz przerwanie kiedy doliczy do konca
+	TCNT2 = 0;				// Actual value of counter
+	OCR2 = 78;				// Count up to this value
+    TIMSK |= (1<<OCIE2); // Turn on interrupts
 }
 
-volatile uint8_t idx = 0;
-
-ISR(TIMER2_COMP_vect)
-{
-    idx++;
-    if(idx == 3) 
-    {   
-        idx = 0;
-    } 
-}
+ISR(TIMER2_COMP_vect);

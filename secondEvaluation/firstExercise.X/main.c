@@ -2,12 +2,8 @@
 #include "pushButton.h"
 
 int main(void)
-{   
-    sei();
-    
-    displayNumber(1,2);
-    displayNumber(2,3);
-    
+{
+    displayNumber(1,0);
     while(1);
     
     return 0;
@@ -29,12 +25,12 @@ return (0);
 }
 */
 /*
-    for(int j = 1; j <= 4; j++)
+for(int j = 1; j <= 4; j++)
+{
+    for(int i = 0; i <= 9; i++)
     {
-        for(int i = 0; i <= 9; i++)
-        {
-            displayNumber(j, i);
-            _delay_ms(500);
-        }
+        displayNumber(j, i);
+        _delay_ms(500);
     }
+}
  */
