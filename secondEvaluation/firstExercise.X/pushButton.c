@@ -12,14 +12,22 @@ uint8_t detectButton()
             (1<<SECOND_BUTTON)|
             (1<<THIRD_BUTTON)|
             (1<<FOURTH_BUTTON);
-
-    if(!(PINB & (1<<FOURTH_BUTTON))) // If PB5 == 0
+    
+    if(!(PINB & (1<<FIRST_BUTTON))) // If PB2 == 0
     {
-        _delay_ms(300);
-        if(!(PINB & (1<<FOURTH_BUTTON))) // If PB5 == 0
+        _delay_ms(700);
+        if(!(PINB & (1<<FIRST_BUTTON))) // If PB2 == 0
         {
-            displayNumber(1,1);
-            return (1);
+            return 1;
+        }
+    }
+
+    if(!(PINB & (1<<SECOND_BUTTON)))
+    {
+        _delay_ms(700);
+        if(!(PINB & (1<<SECOND_BUTTON)))
+        {
+            return 2;
         }
     }
     if(!(PINB & (1<<THIRD_BUTTON)))
@@ -27,26 +35,16 @@ uint8_t detectButton()
         _delay_ms(300);
         if(!(PINB & (1<<THIRD_BUTTON)))
         {
-            displayNumber(2,2);
-            return (1);
+            return 3;
         }
     }
-    if(!(PINB & (1<<SECOND_BUTTON)))
+    
+    if(!(PINB & (1<<FOURTH_BUTTON)))
     {
         _delay_ms(300);
-        if(!(PINB & (1<<SECOND_BUTTON)))
+        if(!(PINB & (1<<FOURTH_BUTTON)))
         {
-            displayNumber(3,3);
-            return (1);
-        }
-    }
-    if(!(PINB & (1<<FIRST_BUTTON)))
-    {
-        _delay_ms(300);
-        if(!(PINB & (1<<FIRST_BUTTON)))
-        {
-            displayNumber(4,4);
-            return (1);
+            return 4;
         }
     }
 }

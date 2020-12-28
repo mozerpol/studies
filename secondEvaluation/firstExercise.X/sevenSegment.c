@@ -82,16 +82,3 @@ uint8_t displayNumber(uint8_t whichDisp, uint8_t whichNumber)
     
     return 0;
 }
-
-// Interrupt for every 5 ms.
-void TIMER2_init(void)
-{
-	TCCR2 |= (1<<WGM21);	// CTC (Clear Timer on Compare Match)
-	TCCR2 |= (1<<CS22);		// Prescaler: 64 
-
-	TCNT2 = 0;				// Actual value of counter
-	OCR2 = 78;				// Count up to this value
-    TIMSK |= (1<<OCIE2); // Turn on interrupts
-}
-
-ISR(TIMER2_COMP_vect);

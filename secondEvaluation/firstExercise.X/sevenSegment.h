@@ -28,5 +28,3 @@
 uint8_t selectDisplay(uint8_t whichDisp); // return 0
 uint8_t selectNumber(uint8_t whichNumber); // return 0
 uint8_t displayNumber(uint8_t whichDisp, uint8_t whichNumber); // return 0
-
-void TIMER2_init(void); // CTC, 1MHz/64/78 = 200 Hz = 5 ms
