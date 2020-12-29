@@ -3,8 +3,10 @@
 #include "controlDCmotor.h"
 
 volatile uint8_t display = 1;
-volatile uint8_t unities = 0;
-volatile uint8_t tens = 0;
+volatile uint8_t unities[5] = {0, 5, 0, 5, 9};
+volatile uint8_t tens[5] = {0, 2, 5, 7, 9}; 
+const uint8_t *unitiesPointer = unities;
+const uint8_t *tensPointer = &tens[0]; // The same method as above
 
 int main(void)
 {   
@@ -15,15 +17,17 @@ int main(void)
         
     while(1)
     {
-        if((detectButton() == 1) && (OCR2 < 249))
+        if((detectButton() == 1) && (unitiesPointer != unities[4]))
         {
             OCR2 += 25;
-            unities += 1;
+            unitiesPointer++;
+            tensPointer++;
         }
-        if((detectButton() == 2) && (OCR2 > 1))
+        if((detectButton() == 2) && (1))
         {
             OCR2 -= 25;
-            tens += 1;
+            unitiesPointer--;
+            tensPointer--;
         }
 		if (TIFR & (1 << OCF2))
 		{
@@ -34,16 +38,15 @@ int main(void)
     return 0;
 }
 
-
 ISR(TIMER0_OVF_vect)
 {
     switch(display)
     {
         case 1:
-            showNumber(display, unities);
+            showNumber(display, *unitiesPointer);
             break;
         case 2:
-            showNumber(display, tens);
+            showNumber(display, *tensPointer);
             display = 0;
             break;
     }
