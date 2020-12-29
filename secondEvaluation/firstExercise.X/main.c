@@ -17,13 +17,13 @@ int main(void)
         
     while(1)
     {
-        if((detectButton() == 1) && (unitiesPointer != unities[4]))
+        if((detectButton() == 1) && (OCR2 != 100))
         {
             OCR2 += 25;
             unitiesPointer++;
             tensPointer++;
         }
-        if((detectButton() == 2) && (1))
+        if((detectButton() == 2) && (OCR2 != 0))
         {
             OCR2 -= 25;
             unitiesPointer--;
