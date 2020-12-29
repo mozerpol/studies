@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <avr/io.h>
-#include <avr/interrupt.h>
+#include <util/delay.h>
 
-//void TIMER2_init(void);
+void init_TIMER2(void);
+void init_TIMER0(void);

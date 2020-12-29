@@ -2,42 +2,32 @@
 #include "pushButton.h"
 #include "controlDCmotor.h"
 
-
-void TIMER2_init(void)
-{
-	TCCR2 |= (1<<WGM20); //Wybor fast PWM
-	TCCR2 |= (1<<COM21); // Clear OC2 on Compare Match
-	TCCR2 |= (1<<CS22);	// Prescaler: 64 
-
-	TCNT2 = 0; // Actual value of counter
-	OCR2 = 0; // Count up to this value
-}
+volatile uint8_t display = 1;
+volatile uint8_t unities = 0;
+volatile uint8_t tens = 0;
 
 int main(void)
 {   
-    DDRB |= (1<<PB1);
-    PORTB |= (1<<PB1);
     _delay_ms(1000);
-    TIMER2_init();
-
+    init_TIMER2();
+    init_TIMER0();
+    sei();
+        
     while(1)
     {
         if((detectButton() == 1) && (OCR2 < 249))
         {
             OCR2 += 25;
+            unities += 1;
         }
         if((detectButton() == 2) && (OCR2 > 1))
         {
             OCR2 -= 25;
+            tens += 1;
         }
-        displayNumber(1,1);
-        displayNumber(2,3);
-       	//TIFR - rejestr flag przerwan (Interrupt Flag register). Jesli timer doliczy do OCR0 to ustawi flage w TIFR, ktora trzeba wyzerowac, aby
-		//liczyl ponownie. Flaga nosi nazwe OCF0: Output Compare Flag 0.
 		if (TIFR & (1 << OCF2))
 		{
-		//	PORTB ^= (1 << PB1);	//Tutaj zmieniamy stan pinu, do ktorego podlaczona jest dioda, dzieki temu caly czas miga.
-			TIFR = (1 << OCF2);	//OCF0 mo?e zosta? wyzerowane po wpisaniu logicznej 1 do jej bitu, czyli obecna linijka w tym kodzie :]
+			TIFR = (1 << OCF2);
 		} 
     }
     
@@ -45,16 +35,28 @@ int main(void)
 }
 
 
-/*
-for(int j = 1; j <= 4; j++)
+ISR(TIMER0_OVF_vect)
 {
-    for(int i = 0; i <= 9; i++)
+    switch(display)
     {
-        displayNumber(j, i);
-        _delay_ms(500);
+        case 1:
+            showNumber(display, unities);
+            break;
+        case 2:
+            showNumber(display, tens);
+            display = 0;
+            break;
     }
+    display++;
 }
- */
+
+
+
+
+//	PORTB ^= (1 << PB1);	//Tutaj zmieniamy stan pinu, do ktorego podlaczona jest dioda, dzieki temu caly czas miga.
+//  DDRB |= (1<<PB1);
+//  PORTB |= (1<<PB1);
+
 
 
         

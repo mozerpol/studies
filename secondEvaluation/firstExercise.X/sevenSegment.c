@@ -74,9 +74,8 @@ uint8_t selectNumber(uint8_t whichNumber)
 }
 
 /// Function for more convenience
-uint8_t displayNumber(uint8_t whichDisp, uint8_t whichNumber)
+uint8_t showNumber(uint8_t whichDisp, uint8_t whichNumber)
 {
-    
     selectNumber(whichNumber);
     selectDisplay(whichDisp);
     
