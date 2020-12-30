@@ -5,16 +5,16 @@ uint8_t selectDisplay(uint8_t whichDisp)
     switch(whichDisp)
     {
         case 1:
-            DDRC = ((DDRC & MASK_PORTC) | FIRST_7SEG);
+            SEL_DISPLAY_DDR = ((SEL_DISPLAY_DDR & MASK_PORTC) | FIRST_7SEG);
             break;
         case 2:
-            DDRC = ((DDRC & MASK_PORTC) | SECOND_7SEG);
+            SEL_DISPLAY_DDR = ((SEL_DISPLAY_DDR & MASK_PORTC) | SECOND_7SEG);
             break;
         case 3:
-            DDRC = ((DDRC & MASK_PORTC) | THIRD_7SEG);
+            SEL_DISPLAY_DDR = ((SEL_DISPLAY_DDR & MASK_PORTC) | THIRD_7SEG);
             break;
         case 4:
-            DDRC = ((DDRC & MASK_PORTC) | FOURTH_7SEG);
+            SEL_DISPLAY_DDR = ((SEL_DISPLAY_DDR & MASK_PORTC) | FOURTH_7SEG);
             break;            
     }
     return 0;
@@ -22,43 +22,43 @@ uint8_t selectDisplay(uint8_t whichDisp)
 
 uint8_t selectNumber(uint8_t whichNumber)
 {
-    DDRD |= 0b11111111; // Almost all 7-seg pins are connected to PORTD, so we
-                        // must set PORTD as output.
+    SEL_NUMBER_DDR |= 0b11111111; // Almost all 7-seg pins are connected to SEL_NUMBER_PORT, so we
+                        // must set SEL_NUMBER_PORT as output.
     switch(whichNumber)
     {
         case 0:
-            PORTD = ZERO_7SEG; // mask is not necessary, because all PORTD is
+            SEL_NUMBER_PORT = ZERO_7SEG; // mask is not necessary, because all SEL_NUMBER_PORT is
                                // for 7seg display purposes.
             break;
         case 1:
-            PORTD = ONE_7SEG;
+            SEL_NUMBER_PORT = ONE_7SEG;
             break;
         case 2:
-            PORTD = TWO_7SEG;
+            SEL_NUMBER_PORT = TWO_7SEG;
             break;
         case 3:
-            PORTD = THREE_7SEG;
+            SEL_NUMBER_PORT = THREE_7SEG;
             break;
         case 4:
-            PORTD = FOUR_7SEG;
+            SEL_NUMBER_PORT = FOUR_7SEG;
             break;
         case 5:
-            PORTD = FIVE_7SEG;
+            SEL_NUMBER_PORT = FIVE_7SEG;
             break;
         case 6:
-            PORTD = SIX_7SEG;
+            SEL_NUMBER_PORT = SIX_7SEG;
             break;
         case 7:
-            PORTD = SEVEN_7SEG;
+            SEL_NUMBER_PORT = SEVEN_7SEG;
             break;
         case 8:
-            PORTD = EIGHT_7SEG;
+            SEL_NUMBER_PORT = EIGHT_7SEG;
             break;
         case 9:
-            PORTD = NINE_7SEG;
+            SEL_NUMBER_PORT = NINE_7SEG;
             break;
         default:
-            PORTD = MINUS_SIGN;
+            SEL_NUMBER_PORT = MINUS_SIGN;
             break; 
     }
     return 0;
@@ -76,7 +76,6 @@ uint8_t showNumber(uint8_t whichDisp, uint8_t whichNumber)
 void init_TIMER0(void)
 {
 	TCCR0 |= (1<<CS01); // Prescaler: 8 
-
 	TCNT0 = 0; // Actual value of counter
     TIMSK |= (1<<TOIE0); // Turn on interrupt
 }

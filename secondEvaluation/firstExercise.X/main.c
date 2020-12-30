@@ -14,6 +14,7 @@ int main(void)
     _delay_ms(250);
     init_TIMER2();
     init_TIMER0();
+    init_MOTOR();
     sei();
         
     while(1)
@@ -34,10 +35,10 @@ int main(void)
         {
             minusStatusFlag ^= 1;
         }
-		if (TIFR & (1 << OCF2))
+		if(TIFR & (1 << OCF2) && (MOTOR_VELOCITY != 0) )
 		{
 			TIFR = (1 << OCF2);
-            //PORTB ^= (1 << PB1);
+            PORTB ^= (1 << PB1);
 		} 
     }
     
