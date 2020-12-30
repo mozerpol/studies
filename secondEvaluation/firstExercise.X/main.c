@@ -35,11 +35,18 @@ int main(void)
         {
             minusStatusFlag ^= 1;
         }
+        if(detectButton() == 4)
+        {
+            PORTB = (0 << PB1);
+            MOTOR_VELOCITY = 0;
+            unitiesPointer = unities;
+            tensPointer = tens;
+        }
 		if(TIFR & (1 << OCF2) && (MOTOR_VELOCITY != 0) )
 		{
 			TIFR = (1 << OCF2);
             PORTB ^= (1 << PB1);
-		} 
+		}
     }
     
     return 0;
