@@ -1,7 +1,7 @@
 #include "pushButton.h"
 #include"sevenSegment.h"
 
-uint8_t detectButton()
+void initButtons()
 {
     BUTTON_DDR &= ~(1<<FIRST_BUTTON)|
             (1<<SECOND_BUTTON)|
@@ -12,16 +12,18 @@ uint8_t detectButton()
             (1<<SECOND_BUTTON)|
             (1<<THIRD_BUTTON)|
             (1<<FOURTH_BUTTON);
-    
+}
+
+uint8_t detectButton()
+{   
     if(!(BUTTON_PIN & (1<<FIRST_BUTTON))) // If PB2 == 0
     {
-        _delay_ms(150);
+        _delay_ms(150); // This delay is against bouncing
         if(!(BUTTON_PIN & (1<<FIRST_BUTTON))) // If PB2 == 0
         {
             return 1;
         }
     }
-
     if(!(BUTTON_PIN & (1<<SECOND_BUTTON)))
     {
         _delay_ms(150);
@@ -38,7 +40,6 @@ uint8_t detectButton()
             return 3;
         }
     }
-    
     if(!(BUTTON_PIN & (1<<FOURTH_BUTTON)))
     {
         _delay_ms(150);
