@@ -32,6 +32,10 @@ int main(void)
             unitiesPointer--;
             tensPointer--;
         }
+        if((detectButton() == 3) && (OCR2 == 0))
+        {
+            minusStatusFlag ^= 1;
+        }
 		if (TIFR & (1 << OCF2))
 		{
 			TIFR = (1 << OCF2);
@@ -51,11 +55,13 @@ ISR(TIMER0_OVF_vect)
             break;
         case 2:
             showNumber(display, *tensPointer);
+            
             break;
-        case 3:
-            showNumber(3, 10);
+        case 10:
+            if(minusStatusFlag) showNumber(3, 10);
             display = 0;
-            break;
+            break; 
+            
     }
     display++;
 }

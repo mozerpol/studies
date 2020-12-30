@@ -72,3 +72,11 @@ uint8_t showNumber(uint8_t whichDisp, uint8_t whichNumber)
     
     return 0;
 }
+
+void init_TIMER0(void)
+{
+	TCCR0 |= (1<<CS01); // Prescaler: 8 
+
+	TCNT0 = 0; // Actual value of counter
+    TIMSK |= (1<<TOIE0); // Turn on interrupt
+}

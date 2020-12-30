@@ -29,3 +29,4 @@
 uint8_t selectDisplay(uint8_t whichDisp); // return 0
 uint8_t selectNumber(uint8_t whichNumber); // return 0
 uint8_t showNumber(uint8_t whichDisp, uint8_t whichNumber); // return 0
+void init_TIMER0(void);

@@ -4,4 +4,3 @@
 #include <util/delay.h>
 
 void init_TIMER2(void);
-void init_TIMER0(void);
