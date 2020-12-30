@@ -23,7 +23,6 @@
 
 
 #define MASK_PORTC  0b11110000
-#define MASK_PORTB  0b11111110
 #define MINUS_SIGN  0b01000000
 
 
