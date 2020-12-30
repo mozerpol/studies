@@ -1,7 +1,7 @@
 #include "pushButton.h"
 #include"sevenSegment.h"
 
-void initButtons()
+void init_Buttons()
 {
     BUTTON_DDR &= ~(1<<FIRST_BUTTON)|
             (1<<SECOND_BUTTON)|

@@ -1,5 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include <avr/io.h>
 #include <util/delay.h>
 
@@ -16,4 +14,4 @@
 
 
 uint8_t detectButton(); // Recognize pressed button 
-void initButtons(void);
+void init_Buttons(void); // Init ports

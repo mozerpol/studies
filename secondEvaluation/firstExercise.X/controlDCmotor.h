@@ -1,10 +1,12 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include <avr/io.h>
-#include <util/delay.h>
 
 
-#define MOTOR_VELOCITY  OCR2
+// Macros that simplify access to ports
+#define MOTOR_DDR   DDRB
+#define MOTOR_PORT  PORTB
+#define MOTOR_PIN   PB1
 
-void init_TIMER2(void);
-void init_MOTOR(void);
+#define MOTOR_VELOCITY  OCR2 // Output pin for PWM
+
+void init_TIMER2(void); // Will use for PWM
+void init_MOTOR(void); // Init ports

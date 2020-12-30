@@ -12,10 +12,10 @@ volatile uint8_t minusStatusFlag = 0; // If minusStatusFlag=1 turn on minus sign
 int main(void)
 {   
     _delay_ms(200); // Delay for my convenience
-    initButtons(); // Init ports
+    init_Buttons(); // Init ports
     init_MOTOR(); // Init ports
     init_TIMER2(); // For motor
-    init_TIMER0(); // For mul displays
+    init_TIMER0(); // For multiplexing displays
 
     sei();
         
@@ -49,11 +49,15 @@ int main(void)
                                       // this display will show 00 value
             tensPointer = tens;
         }
+        // TIFR - interrupt flag register. If the timer counts to OCR0 it'll set
+        // flag in TIFR which must be reset to count again. The flag is called
+        // OCF0: Output Compare Flag 0.
 		if(TIFR & (1 << OCF2) && (MOTOR_VELOCITY != 0) )
 		{
 			TIFR = (1 << OCF2);
             PORTB ^= (1 << PB1); // Our output. Every time when the counter
-                                 // counts to OCR0, then change state.
+                                 // counts to OCR0 and set flag in TIFR register
+                                 // then change state.
 		}
     }
     
@@ -77,5 +81,5 @@ ISR(TIMER0_OVF_vect) // Interrupt handler for multiplexing 7seg displays
             display = 0;
             break; 
     }
-    display++;
+    display++; // Change to next display
 }
