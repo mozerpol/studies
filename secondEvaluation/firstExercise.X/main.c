@@ -7,10 +7,13 @@ volatile uint8_t unities[5] = {0, 5, 0, 5, 9};
 volatile uint8_t tens[5] = {0, 2, 5, 7, 9}; 
 const uint8_t *unitiesPointer = unities;
 const uint8_t *tensPointer = &tens[0]; // The same method as above
+volatile uint8_t minusStatusFlag = 0;
 
 int main(void)
 {   
-    _delay_ms(1000);
+//    DDRB |= (1<<PB1);
+//    PORTB |= (1<<PB1);
+    _delay_ms(250);
     init_TIMER2();
     init_TIMER0();
     sei();
@@ -32,6 +35,7 @@ int main(void)
 		if (TIFR & (1 << OCF2))
 		{
 			TIFR = (1 << OCF2);
+            //PORTB ^= (1 << PB1);
 		} 
     }
     
@@ -47,6 +51,9 @@ ISR(TIMER0_OVF_vect)
             break;
         case 2:
             showNumber(display, *tensPointer);
+            break;
+        case 3:
+            showNumber(3, 3);
             display = 0;
             break;
     }

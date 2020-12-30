@@ -69,6 +69,10 @@ uint8_t selectNumber(uint8_t whichNumber)
             PORTB = ((PORTB & MASK_PORTB) | 0b00000001);
             PORTD = NINE_7SEG;
             break;
+        default:
+            PORTD = MINUS_SIGN;
+            PORTB = (PORTB & MASK_PORTB);
+            break; 
     }
     return 0;
 }

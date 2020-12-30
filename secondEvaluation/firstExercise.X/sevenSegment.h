@@ -8,21 +8,23 @@
 #define ONE_7SEG    0b00100100
 #define TWO_7SEG    0b11011100
 #define THREE_7SEG  0b11110100
-#define FOUR_7SEG   0b01100100
-#define FIVE_7SEG   0b11110000
-#define SIX_7SEG    0b11111000
+#define FOUR_7SEG   0b01100110
+#define FIVE_7SEG   0b11110010
+#define SIX_7SEG    0b11111010
 #define SEVEN_7SEG  0b10100100
 #define EIGHT_7SEG  0b11111111
-#define NINE_7SEG   0b11110100
+#define NINE_7SEG   0b11110110
 
 // Macros for selecting 7 segment display at PORTC
 #define FIRST_7SEG  0b00000001
 #define SECOND_7SEG 0b00000010
 #define THIRD_7SEG  0b00000100
 #define FOURTH_7SEG 0b00001000
+
+
 #define MASK_PORTC  0b11110000
 #define MASK_PORTB  0b11111110
-
+#define MINUS_SIGN  0b01000000
 
 
 uint8_t selectDisplay(uint8_t whichDisp); // return 0
