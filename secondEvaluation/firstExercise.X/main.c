@@ -11,8 +11,6 @@ volatile uint8_t minusStatusFlag = 0;
 
 int main(void)
 {   
-//    DDRB |= (1<<PB1);
-//    PORTB |= (1<<PB1);
     _delay_ms(250);
     init_TIMER2();
     init_TIMER0();
@@ -20,19 +18,19 @@ int main(void)
         
     while(1)
     {
-        if((detectButton() == 1) && (OCR2 != 100))
+        if((detectButton() == 1) && (MOTOR_VELOCITY != 100))
         {
-            OCR2 += 25;
+            MOTOR_VELOCITY += 25;
             unitiesPointer++;
             tensPointer++;
         }
-        if((detectButton() == 2) && (OCR2 != 0))
+        if((detectButton() == 2) && (MOTOR_VELOCITY != 0))
         {
-            OCR2 -= 25;
+            MOTOR_VELOCITY -= 25;
             unitiesPointer--;
             tensPointer--;
         }
-        if((detectButton() == 3) && (OCR2 == 0))
+        if((detectButton() == 3) && (MOTOR_VELOCITY == 0))
         {
             minusStatusFlag ^= 1;
         }
@@ -55,13 +53,11 @@ ISR(TIMER0_OVF_vect)
             break;
         case 2:
             showNumber(display, *tensPointer);
-            
             break;
         case 10:
             if(minusStatusFlag) showNumber(3, 10);
             display = 0;
             break; 
-            
     }
     display++;
 }
@@ -76,21 +72,3 @@ ISR(TIMER0_OVF_vect)
 
 
         
-        /*
-        if(detectButton() == 1)
-        {
-            motorVelocity += 25;
-        }
-        if(detectButton() == 2)
-        {
-            motorVelocity -= 25;
-        }
-        if(motorVelocity == 0)
-        {
-            
-        }
-        if(motorVelocity > 0)
-        {
-            // delete minus sign from 7seg
-        } // else // show minus sign
-         * */

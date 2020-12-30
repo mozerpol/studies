@@ -9,3 +9,9 @@ void init_TIMER2(void)
 	TCNT2 = 0; // Actual value of counter
 	OCR2 = 0; // Count up to this value
 }
+
+void init_MOTOR(void)
+{
+    DDRB |= (1<<PB1);
+    PORTB |= (1<<PB1);
+}
