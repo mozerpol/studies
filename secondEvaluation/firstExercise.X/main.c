@@ -53,7 +53,7 @@ ISR(TIMER0_OVF_vect)
             showNumber(display, *tensPointer);
             break;
         case 3:
-            showNumber(3, 3);
+            showNumber(3, 10);
             display = 0;
             break;
     }
