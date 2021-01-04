@@ -1,6 +1,7 @@
 #include "sevenSegment.h"
 #include "pushButton.h"
 #include "controlDCmotor.h"
+#include "adc.h"
 
 volatile uint8_t display = 1; // Var for changing displays in interrupt handler
 volatile uint8_t unities[5] = {0, 5, 0, 5, 9}; // Unities part
