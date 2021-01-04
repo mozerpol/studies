@@ -57,17 +57,19 @@ int main(void)
 		if(TIFR & (1 << OCF2) && (MOTOR_VELOCITY != 0) )
 		{
 			TIFR = (1 << OCF2);
-            PORTB ^= (1 << PB1); // Our output. Every time when the counter
+        //    PORTB ^= (1 << PB1); // Our output. Every time when the counter
                                  // counts to OCR0 and set flag in TIFR register
                                  // then change state.
 		}
         
-       // ADCSRA |= (1 << ADSC); // Start conversion, measure the voltage and
+        ADCSRA |= (1 << ADSC); // Start conversion, measure the voltage and
                                // change it to binary code.
-       // loop_until_bit_is_clear(ADCSRA, ADSC); // Wait until the conversion is 
+        loop_until_bit_is_clear(ADCSRA, ADSC); // Wait until the conversion is 
                                                // over. The function checks if
                                                // the ADC module cleared the
                                                // ADSC bit.
+        if(ADC >= 512) PORTB |= (1 << PB1);
+        else PORTB &= ~(1 << PB1);
     }
     
     return 0;
