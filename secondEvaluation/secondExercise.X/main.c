@@ -17,6 +17,7 @@ int main(void)
     init_MOTOR(); // Init ports
     init_TIMER2(); // For motor
     init_TIMER0(); // For multiplexing displays
+    init_ADC(); // Init ADC module at PORT PC5
 
     sei();
         
@@ -60,6 +61,13 @@ int main(void)
                                  // counts to OCR0 and set flag in TIFR register
                                  // then change state.
 		}
+        
+       // ADCSRA |= (1 << ADSC); // Start conversion, measure the voltage and
+                               // change it to binary code.
+       // loop_until_bit_is_clear(ADCSRA, ADSC); // Wait until the conversion is 
+                                               // over. The function checks if
+                                               // the ADC module cleared the
+                                               // ADSC bit.
     }
     
     return 0;
