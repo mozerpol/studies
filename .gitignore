@@ -6,3 +6,5 @@ Makefile
 *.flag
 /secondEvaluation/firstExercise.X/dist/
 /secondEvaluation/firstExercise.X/build/
+/secondEvaluation/secondExercise.X/build/
+/secondEvaluation/secondExercise.X/dist/
