@@ -68,14 +68,80 @@ int main(void)
                 // the ADC module cleared the ADSC bit.
                 loop_until_bit_is_clear(ADCSRA, ADSC); 
                 
-                if(ADC >= 512) 
+                if(ADC <= 102) 
                 {
                     PORTB |= (1 << PB1);
                     minusStatusFlag = 0;
+                    MOTOR_VELOCITY = 0; // Increase OCR2 reg, speed is faster
+                    // Move pointer to the next value and thanks to this 7seg
+                    // will show higher value
+                    unitiesPointer = &unities[0];
+                    tensPointer = &tens[0];
                 }
-                else 
+                if((ADC > 102) && (ADC <= 204))
                 {
-                    PORTB &= ~(1 << PB1);
+                    MOTOR_VELOCITY = 25;
+                    unitiesPointer = &unities[1];
+                    tensPointer = &tens[1]; 
+                }
+                if((ADC > 204) && (ADC <= 306))
+                {
+                    MOTOR_VELOCITY = 50;
+                    unitiesPointer = &unities[2];
+                    tensPointer = &tens[2]; 
+                }
+                if((ADC > 306) && (ADC <= 408))
+                {
+                    MOTOR_VELOCITY = 75;
+                    unitiesPointer = &unities[3];
+                    tensPointer = &tens[3];
+                }
+                if((ADC > 408) && (ADC <= 510))
+                {
+                    PORTB |= (1 << PB1);
+                    MOTOR_VELOCITY = 100;
+                    unitiesPointer = &unities[4];
+                    tensPointer = &tens[4];
+                    minusStatusFlag = 0;
+                }
+                if((ADC > 510) && (ADC <= 612))
+                {
+                    PORTB |= (1 << PB1);
+                    MOTOR_VELOCITY = 0;
+                    unitiesPointer = &unities[0];
+                    tensPointer = &tens[0];
+                    minusStatusFlag = 1;
+                }
+                if((ADC > 612) && (ADC <= 714))
+                {
+                    PORTB |= (1 << PB1);
+                    MOTOR_VELOCITY = 25;
+                    unitiesPointer = &unities[1];
+                    tensPointer = &tens[1];
+                }
+                if((ADC > 714) && (ADC <= 816))
+                {
+                    PORTB |= (1 << PB1);
+                    MOTOR_VELOCITY -= 25; // Increase OCR2 reg, speed is faster
+                    unitiesPointer--; // Move pointer to the next value and thanks to
+                                      // this 7seg will show higher value
+                    tensPointer--;
+                }
+                if((ADC > 816) && (ADC <= 918))
+                {
+                    PORTB |= (1 << PB1);
+                    MOTOR_VELOCITY -= 25; // Increase OCR2 reg, speed is faster
+                    unitiesPointer--; // Move pointer to the next value and thanks to
+                                      // this 7seg will show higher value
+                    tensPointer--;
+                }
+                if(ADC > 918)
+                {
+                    PORTB |= (1 << PB1);
+                    MOTOR_VELOCITY -= 25; // Increase OCR2 reg, speed is faster
+                    unitiesPointer--; // Move pointer to the next value and thanks to
+                                      // this 7seg will show higher value
+                    tensPointer--;
                     minusStatusFlag = 1;
                 }
                 
