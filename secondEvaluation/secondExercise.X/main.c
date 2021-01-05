@@ -122,26 +122,25 @@ int main(void)
                 if((ADC > 714) && (ADC <= 816))
                 {
                     PORTB |= (1 << PB1);
-                    MOTOR_VELOCITY -= 25; // Increase OCR2 reg, speed is faster
-                    unitiesPointer--; // Move pointer to the next value and thanks to
-                                      // this 7seg will show higher value
-                    tensPointer--;
+                    MOTOR_VELOCITY = 50;
+                    unitiesPointer = &unities[2];
+                    tensPointer = &tens[2];
                 }
                 if((ADC > 816) && (ADC <= 918))
                 {
                     PORTB |= (1 << PB1);
-                    MOTOR_VELOCITY -= 25; // Increase OCR2 reg, speed is faster
-                    unitiesPointer--; // Move pointer to the next value and thanks to
+                    MOTOR_VELOCITY = 75; // Increase OCR2 reg, speed is faster
+                    unitiesPointer = &unities[3]; // Move pointer to the next value and thanks to
                                       // this 7seg will show higher value
-                    tensPointer--;
+                    tensPointer = &tens[3];
                 }
                 if(ADC > 918)
                 {
                     PORTB |= (1 << PB1);
-                    MOTOR_VELOCITY -= 25; // Increase OCR2 reg, speed is faster
-                    unitiesPointer--; // Move pointer to the next value and thanks to
+                    MOTOR_VELOCITY = 100; // Increase OCR2 reg, speed is faster
+                    unitiesPointer = &unities[4]; // Move pointer to the next value and thanks to
                                       // this 7seg will show higher value
-                    tensPointer--;
+                    tensPointer = &tens[4];
                     minusStatusFlag = 1;
                 }
                 
