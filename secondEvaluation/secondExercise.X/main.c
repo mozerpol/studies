@@ -13,28 +13,19 @@ volatile uint8_t minusStatusFlag = 0; // If minusStatusFlag=1 turn on minus sign
 int main(void)
 {   
     uint8_t operatingMode = 0;
-    
-    _delay_ms(200); // Delay for my convenience
+
     init_Buttons(); // Init ports
     init_MOTOR(); // Init ports
     init_TIMER2(); // For motor
     init_TIMER0(); // For multiplexing displays
     init_ADC(); // Init ADC module at PORT PC5
-
+    _delay_ms(200); // Delay for my convenience
+    
     sei();
 
     while(1)
     { 
-        // 
-        if(detectButton() == 4)
-        {
-            PORTB = (0 << PB1); // Our output
-            MOTOR_VELOCITY = 0;
-            unitiesPointer = unities; // Go back to the first value, thanks to
-                                      // this display will show 00 value
-            tensPointer = tens;
-            operatingMode ^= 1;
-        }
+
         
         switch(operatingMode)
         {
@@ -57,8 +48,38 @@ int main(void)
                 if((detectButton() == 3) && (MOTOR_VELOCITY == 0))
                 {
                     minusStatusFlag ^= 1; // Turn on or off turn direction
-                }        
-                
+                }       
+                // If pressed first button and MOTOR_VELOCITY is not equal 100
+                if((detectButton() == 1) && (MOTOR_VELOCITY != 100))
+                {
+                    MOTOR_VELOCITY += 25; // Increase OCR2 reg, speed is faster
+                    unitiesPointer++; // Move pointer to the next value and thanks to
+                                      // this 7seg will show higher value
+                    tensPointer++;
+                }
+                if((detectButton() == 2) && (MOTOR_VELOCITY != 0))
+                {
+                    MOTOR_VELOCITY -= 25; // Decrease speed
+                    unitiesPointer--;
+                    tensPointer--;
+                }
+                // If 7seg show value 00, can turn direction
+                if((detectButton() == 3) && (MOTOR_VELOCITY == 0))
+                {
+                    minusStatusFlag ^= 1; // Turn on or off turn direction
+                }       
+
+                if(detectButton() == 4)
+                {
+                    PORTB ^= (1 << PB1);
+                    _delay_ms(100);
+                    PORTB ^= (1 << PB1);
+                    MOTOR_VELOCITY = 0;
+                    unitiesPointer = &unities[0]; // Go back to the first value, thanks to
+                                              // this display will show 00 value
+                    tensPointer = &tens[0];
+                    operatingMode = 1;
+                }
                 break;
                 
             case 1: 
@@ -70,7 +91,6 @@ int main(void)
                 
                 if(ADC <= 102) 
                 {
-                    PORTB |= (1 << PB1);
                     minusStatusFlag = 0;
                     MOTOR_VELOCITY = 0; // Increase OCR2 reg, speed is faster
                     // Move pointer to the next value and thanks to this 7seg
@@ -98,7 +118,6 @@ int main(void)
                 }
                 if((ADC > 408) && (ADC <= 510))
                 {
-                    PORTB |= (1 << PB1);
                     MOTOR_VELOCITY = 100;
                     unitiesPointer = &unities[4];
                     tensPointer = &tens[4];
@@ -106,7 +125,6 @@ int main(void)
                 }
                 if((ADC > 510) && (ADC <= 612))
                 {
-                    PORTB |= (1 << PB1);
                     MOTOR_VELOCITY = 0;
                     unitiesPointer = &unities[0];
                     tensPointer = &tens[0];
@@ -114,21 +132,18 @@ int main(void)
                 }
                 if((ADC > 612) && (ADC <= 714))
                 {
-                    PORTB |= (1 << PB1);
                     MOTOR_VELOCITY = 25;
                     unitiesPointer = &unities[1];
                     tensPointer = &tens[1];
                 }
                 if((ADC > 714) && (ADC <= 816))
                 {
-                    PORTB |= (1 << PB1);
                     MOTOR_VELOCITY = 50;
                     unitiesPointer = &unities[2];
                     tensPointer = &tens[2];
                 }
                 if((ADC > 816) && (ADC <= 918))
                 {
-                    PORTB |= (1 << PB1);
                     MOTOR_VELOCITY = 75; // Increase OCR2 reg, speed is faster
                     unitiesPointer = &unities[3]; // Move pointer to the next value and thanks to
                                       // this 7seg will show higher value
@@ -136,28 +151,36 @@ int main(void)
                 }
                 if(ADC > 918)
                 {
-                    PORTB |= (1 << PB1);
                     MOTOR_VELOCITY = 100; // Increase OCR2 reg, speed is faster
                     unitiesPointer = &unities[4]; // Move pointer to the next value and thanks to
                                       // this 7seg will show higher value
                     tensPointer = &tens[4];
                     minusStatusFlag = 1;
                 }
-                
+                if(detectButton() == 4)
+                {
+                    PORTB ^= (1 << PB1);
+                    _delay_ms(100);
+                    PORTB ^= (1 << PB1);
+                    MOTOR_VELOCITY = 0;
+                    unitiesPointer = &unities[0]; // Go back to the first value, thanks to
+                                              // this display will show 00 value
+                    tensPointer = &tens[0];
+                    operatingMode = 0;
+                }
                 break;
         }
 
         // TIFR - interrupt flag register. If the timer counts to OCR0 it'll set
         // flag in TIFR which must be reset to count again. The flag is called
         // OCF0: Output Compare Flag 0.
-//		if(TIFR & (1 << OCF2) && (MOTOR_VELOCITY != 0) )
-//		{
-//			TIFR = (1 << OCF2);
-//            PORTB ^= (1 << PB1); // Our output. Every time when the counter
-//                                 // counts to OCR0 and set flag in TIFR register
-//                                 // then change state.
-//		}
-        
+		if(TIFR & (1 << OCF2) && (MOTOR_VELOCITY != 0) )
+		{
+			TIFR = (1 << OCF2);
+            PORTB ^= (1 << PB1); // Our output. Every time when the counter
+                                 // counts to OCR0 and set flag in TIFR register
+                                 // then change state.
+		}
     }
     
     return 0;
