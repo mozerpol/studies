@@ -26,6 +26,8 @@
 
 #define MASK_PORTC  0b11110000
 #define MINUS_SIGN  0b01000000
+#define A_CHAR      0b11101111
+#define D_CHAR      0b10111111
 
 
 uint8_t selectDisplay(uint8_t whichDisp); // return 0

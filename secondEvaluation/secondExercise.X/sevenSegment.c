@@ -23,9 +23,6 @@ uint8_t selectDisplay(uint8_t whichDisp)
 
 uint8_t selectNumber(uint8_t whichNumber)
 {
-    SEL_NUMBER_DDR |= 0b11111111; // Almost all 7-seg pins are connected to 
-                                  // SEL_NUMBER_PORT, so we must set 
-                                  //SEL_NUMBER_PORT as output.
     switch(whichNumber)
     {
         case 0:
@@ -59,6 +56,12 @@ uint8_t selectNumber(uint8_t whichNumber)
         case 9:
             SEL_NUMBER_PORT = NINE_7SEG;
             break;
+        case 10:
+            SEL_NUMBER_PORT = A_CHAR;
+            break;
+        case 11:
+            SEL_NUMBER_PORT = D_CHAR;
+            break;
         default: // For our purposes this way will be good
             SEL_NUMBER_PORT = MINUS_SIGN;
             break; 
@@ -78,6 +81,9 @@ uint8_t showNumber(uint8_t whichDisp, uint8_t whichNumber)
 
 void init_TIMER0(void)
 {
+    SEL_NUMBER_DDR |= 0b11111111; // This part is for 7seg purposes. All 7-seg
+                                  // pins are connected to  SEL_NUMBER_PORT, so
+                                  // we must set SEL_NUMBER_PORT as output.
 	TCCR0 |= (1<<CS01); // Prescaler: 8 
 	TCNT0 = 0; // Actual value of counter
     TIMSK |= (1<<TOIE0); // Turn on interrupt. Interrupt handler is in main.c

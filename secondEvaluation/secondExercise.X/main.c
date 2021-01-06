@@ -9,6 +9,7 @@ volatile uint8_t tens[5] = {0, 2, 5, 7, 9}; // Tens part displayed on display
 volatile const uint8_t *unitiesPointer = unities; // Pointer for first element
 volatile const uint8_t *tensPointer = &tens[0]; // The same method as above
 volatile uint8_t minusStatusFlag = 0; // If minusStatusFlag=1 turn on minus sign
+volatile uint8_t digitalOrAnalog = 11;
 
 int main(void)
 {   
@@ -25,11 +26,10 @@ int main(void)
 
     while(1)
     { 
-
-        
         switch(operatingMode)
         {
             case 0: 
+                digitalOrAnalog = 11;
                 // If pressed first button and MOTOR_VELOCITY is not equal 100
                 if((detectButton() == 1) && (MOTOR_VELOCITY != 100))
                 {
@@ -71,9 +71,7 @@ int main(void)
 
                 if(detectButton() == 4)
                 {
-                    PORTB ^= (1 << PB1);
-                    _delay_ms(100);
-                    PORTB ^= (1 << PB1);
+                    blinkLED();
                     MOTOR_VELOCITY = 0;
                     unitiesPointer = &unities[0]; // Go back to the first value, thanks to
                                               // this display will show 00 value
@@ -83,6 +81,7 @@ int main(void)
                 break;
                 
             case 1: 
+                digitalOrAnalog = 10;
                 ADCSRA |= (1 << ADSC); // Start conversion, measure the voltage
                                        // and change it to binary code.
                 // Wait until the conversion is over. The function checks if
@@ -159,9 +158,7 @@ int main(void)
                 }
                 if(detectButton() == 4)
                 {
-                    PORTB ^= (1 << PB1);
-                    _delay_ms(100);
-                    PORTB ^= (1 << PB1);
+                    blinkLED();
                     MOTOR_VELOCITY = 0;
                     unitiesPointer = &unities[0]; // Go back to the first value, thanks to
                                               // this display will show 00 value
@@ -196,9 +193,12 @@ ISR(TIMER0_OVF_vect) // Interrupt handler for multiplexing 7seg displays
         case 2: // second display
             showNumber(display, *tensPointer);
             break;
-        case 10: // 10 value, because 7seg inertia. Should be "case 3:", but
+        case 3: // fourth display
+            showNumber(4, digitalOrAnalog);
+            break;
+        case 4: // 10 value, because 7seg inertia. Should be "case 3:", but
                  // 7seg is not ideal. Thanks to '10' 7seg works properly
-            if(minusStatusFlag) showNumber(3, 11); // 11 value means show minus
+            if(minusStatusFlag) showNumber(3, 12); // 11 value means show minus
                                                    // sign
             display = 0;
             break; 

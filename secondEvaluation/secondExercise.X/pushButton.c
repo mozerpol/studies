@@ -51,3 +51,10 @@ uint8_t detectButton()
     
     return 0;
 }
+
+void blinkLED(void)
+{
+    BUTTON_PORT ^= (1 << BLINK_PORT);
+    _delay_ms(100);
+    BUTTON_PORT ^= (1 << BLINK_PORT);
+}
