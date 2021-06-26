@@ -1,4 +1,5 @@
-In this repositorium I'll put some Matlab code, which helped me pass the Optimização de Sistemas de Energia course at ISEP in Porto. Rather, this repository will be like a souvenir 🇵🇹
+In this repositorium I'll put some Matlab code, which helped me pass the Optimização de Sistemas de Energia course (ang. *Optimization and Decision Methods in Power Systems*) at ISEP in Porto. Rather, this repository will be like a souvenir 🇵🇹 <br/>
+This subject was lead by Maria Teresa Costa, Alzira Mota and Nuno Gomes.
 
 In these tasks I used Matlab R2020b for linux systems with Optimization Toolbox (https://en.wikipedia.org/wiki/Optimization_Toolbox)
 
