@@ -1,8 +1,5 @@
-# automaticControl
-In this repository I have put everything related with automatic control
-____________
-
-Below is the part of *DynamicControlSystems* concerns the school subject *Sistemas de Controlo Dinâmico* (ang. *Dynamic Control Systems*) at ISEP in Porto 🇵🇹
+# DynamicControlSystems
+In this repository I have the part of the school course *Sistemas de Controlo Dinâmico* (ang. *Dynamic Control Systems*) at ISEP in Porto 🇵🇹
 
 Below are my notes that I made while preparing for the exam, I hope everything is ok ;D <br/>
 The notes were made in my mother language, despite teaching in English. <br/>
