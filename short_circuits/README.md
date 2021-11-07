@@ -1,6 +1,6 @@
 ## Short circuits in power systems
 _____
-My private notes, how to calculate short short circuits in power systems, step
+My private notes, how to calculate short circuits in power systems, step
 by step. I had this course with Robert Kowalak. Notes are in my mother language.
 ![1](https://user-images.githubusercontent.com/43972902/140661904-33d00bc6-a90f-4cd9-8914-6d451cfb8991.jpg)
 ![2](https://user-images.githubusercontent.com/43972902/140661906-63b44d32-684e-4d43-b815-1f759d7dc11f.jpg)
